@@ -1,12 +1,13 @@
 <template>
     <nav class="navbar">
-            <div class="navbar-menu">
-                <ul>
-<!--Se coloco el operador v-bind al atributo href utilizando su minima expreción el operador : / y se soluciono el enlace a las distintas secciones-->
-                    <a v-for="nav in navegacion" :key="nav.nombre" :href="nav.enlace" class="nav-item" >{{nav.nombre}}</a>  
-                </ul>
-            </div>
-        </nav>
+        <div class="navbar-menu">
+            <ul>
+                <li v-for="nav in navegacion" :key="nav.nombre">
+                    <a :href="nav.enlace" class="nav-item">{{nav.nombre}}</a> 
+                </li>
+            </ul>
+        </div>
+    </nav>
 </template>
 
 <script setup>
@@ -22,46 +23,61 @@ const navegacion= ref([
 
 <style scoped>
 .navbar {
-    background-color: rgba(81, 27, 107, 0.726); /* Establece el color de fondo usando una variable CSS */
-    color: #ecd5f3; /* Establece el color del texto en blanco */
-    padding: 0.5rem 1rem; /* Añade un padding de 0.5rem arriba y abajo, y 1rem a los lados */
-    align-items: center; /* Centra verticalmente los elementos dentro de la navbar */
-}
-
-.navbar-item {
-    color: #ecd5f3; /* Establece el color del texto en blanco */
-    text-decoration: none; /* Elimina el subrayado de los enlaces */
-    margin-right: 1rem; /* Añade un margen derecho de 1rem entre los elementos */
+    background-color: rgba(81, 27, 107, 0.726);
+    color: #ecd5f3;
+    padding: 0.5rem 1rem;
+    align-items: center;
 }
 
 .navbar-menu {
-    display: flex; /* Organiza los elementos en línea usando flexbox */
-    justify-content: flex-end; /* Alinea los elementos al final de la navbar */
+    display: flex;
+    justify-content: flex-end;
 }
 
-.nav-list {
-    list-style: none; /* Elimina los puntos o números de las listas */
+/* --- ESTA ES LA PARTE MÁS IMPORTANTE --- */
+.navbar-menu ul {
+    display: flex;         /* 1. Pone los <li> en línea horizontal */
+    flex-wrap: wrap;       /* 2. Permite que bajen de línea si no caben */
+    list-style: none;      /* 3. Quita los puntos de la lista */
+    padding: 0;            /* 4. ¡Quita el padding que causaba el error! */
+    margin: 0;             /* 5. Quita el margen por defecto */
 }
 
-a {
-    border: 1px solid; /* Añade un borde sólido de 1px */
-    border-color: hsla(293, 73%, 40%, 0.39); /* Define el color del borde usando hsla */
-    border-radius: 5px; /* Redondea las esquinas del borde */
-    text-decoration: none; /* Elimina el subrayado de los enlaces */
-    transition: 0.4s; /* Añade una transición suave de 0.4s para los cambios de estilo */
-    padding: 5px; /* Añade un padding de 5px alrededor del contenido */
+/* Es mejor aplicar el margen al <li> para separar los botones */
+.navbar-menu li {
+    margin-right: 0.5rem; /* Ajusta esto para la separación que quieras */
+}
+.navbar-menu li:last-child {
+    margin-right: 0; /* El último elemento no necesita margen */
 }
 
-a:hover {
-    background-color: hsla(290, 41%, 66%, 0.712); /* Cambia el color de fondo al pasar el mouse sobre un enlace */
+/* Estilos para el enlace (tu clase .nav-item) */
+.nav-item {
+    display: block; /* Hace que el padding se aplique correctamente */
+    color: #ecd5f3;
+    border: 1px solid hsla(293, 73%, 40%, 0.39);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.4s;
+    padding: 5px 10px; /* Un poco más de espacio a los lados */
 }
+
+.nav-item:hover {
+    background-color: hsla(290, 41%, 66%, 0.712);
+}
+
+/* El CSS global 'a' y '.nav-list' ya no son necesarios si usamos .nav-item */
 
 @media (max-width: 768px) {
   .navbar-menu {
-    display: flex; /* Organiza los elementos en línea usando flexbox */
-    justify-content: flex-end; /* Alinea los elementos al final de la navbar */
-    width: 100%; /* Asegura que la navbar ocupe el 100% del ancho en pantallas pequeñas */
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  /* Opcional: Centrar los items en móvil */
+  .navbar-menu ul {
+    justify-content: center;
   }
 }
-
 </style>
